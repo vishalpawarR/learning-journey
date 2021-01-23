@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accordion</title>
+    <style>
+        .accordion {
+            background-color: #eee;
+            color: #444;
+            width: 100%;
+            cursor: pointer;
+            font-size: 18px;
+            text-align: left;
+            padding: 12px;
+            border: none;
+            outline: none;
+            transition: 0.4s;
+        }
+
+        .active,
+        .accordion:hover {
+            background-color: #ccc;
+        }
+
+        .panel {
+            display: none;
+            padding: 0 18px;
+            background-color: white;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Accordion</h2>
+    <button class="accordion">Section 1</button>
+    <div class="panel">
+        <p>Content</p>
+    </div>
+    <button class="accordion">Section 2</button>
+    <div class="panel">
+        <p>Content</p>
+    </div>
+    <button class="accordion">Section 3</button>
+    <div class="panel">
+        <p>Content</p>
+    </div>
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        for (let i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
