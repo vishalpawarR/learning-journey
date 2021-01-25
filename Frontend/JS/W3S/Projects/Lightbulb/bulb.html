@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +10,20 @@
             margin: auto;
             text-align: center;
         }
+
+        div {
+            padding: 20px;
+        }
     </style>
 </head>
+
 <body>
     <h1 class="center-all">Bulb on / Off Using JS</h1>
-    <button onclick="document.getElementById">ON</button>
-    <img src="pic_bulboff.gif" alt="bulb">
-    <button>OFF</button>
+    <div class="center-all">
+        <button onclick="document.getElementById('image').src='pic_bulbon.gif'">ON</button>
+        <img id="image" src="pic_bulboff.gif" alt="bulb">
+        <button onclick="document.getElementById('image').src='pic_bulboff.gif'">OFF</button>
+    </div>
 </body>
+
 </html>
