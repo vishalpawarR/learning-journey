@@ -811,3 +811,769 @@ echo "Study " . $_GET['subject'] . " at " . $_GET['web'];
 </body>
 </html>
 ```
+
+## OOPS
+
+### Defining a class
+
+```php
+<?php
+class Fruit {
+  // code goes here...
+}
+?>
+```
+
+### Example
+
+```php
+<?php
+class Fruit {
+  // Properties
+  public $name;
+  public $color;
+
+  // Methods
+  function set_name($name) {
+    $this->name = $name;
+  }
+  function get_name() {
+    return $this->name;
+  }
+}
+?>
+```
+
+### Creating the Object of the class
+
+```php
+<?php
+class Fruit {
+  // Properties
+  public $name;
+  public $color;
+
+  // Methods
+  function set_name($name) {
+    $this->name = $name;
+  }
+  function get_name() {
+    return $this->name;
+  }
+}
+
+$apple = new Fruit();
+$banana = new Fruit();
+$apple->set_name('Apple');
+$banana->set_name('Banana');
+
+echo $apple->get_name();
+echo "<br>";
+echo $banana->get_name();
+?>
+```
+
+### PHP - The $this Keyword
+
+The $this keyword refers to the current object, and is only available inside methods.
+
+### PHP - `instanceof`
+
+You can use the `instanceof` keyword to check if an object belongs to a specific class:
+
+```php
+<?php
+$apple = new Fruit();
+var_dump($apple instanceof Fruit);
+?>
+```
+
+## Constructor `__constructor()`
+
+Example
+
+```php
+<?php
+class Fruit {
+  public $name;
+  public $color;
+
+  function __construct($name) {
+    $this->name = $name;
+  }
+  function get_name() {
+    return $this->name;
+  }
+}
+
+$apple = new Fruit("Apple");
+echo $apple->get_name();
+?>
+```
+
+## Destructors `__destructor()`
+
+The destructor is called at the end of the script automatically.
+
+```php
+<?php
+class Fruit {
+  public $name;
+  public $color;
+
+  function __construct($name) {
+    $this->name = $name;
+  }
+  function __destruct() {
+    echo "The fruit is {$this->name}.";
+  }
+}
+
+$apple = new Fruit("Apple");
+?>
+```
+
+## Access Modifiers
+
+Properties and methods can have access modifiers to specify their access.
+
+- `public`
+- `protected`
+- `private`
+
+```php
+<?php
+class Fruit {
+  public $name;
+  protected $color;
+  private $weight;
+}
+
+$mango = new Fruit();
+$mango->name = 'Mango'; // OK
+$mango->color = 'Yellow'; // ERROR
+$mango->weight = '300'; // ERROR
+?>
+```
+
+## Inheritance
+
+The inheritance occurs using the `extends` keyword.
+
+> Note: PHP only supports single inheritance.
+
+```php
+<?php
+class Fruit {
+  public $name;
+  public $color;
+  public function __construct($name, $color) {
+    $this->name = $name;
+    $this->color = $color;
+  }
+  public function intro() {
+    echo "The fruit is {$this->name} and the color is {$this->color}.";
+  }
+}
+
+// Strawberry is inherited from Fruit
+class Strawberry extends Fruit {
+  public function message() {
+    echo "Am I a fruit or a berry? ";
+  }
+}
+$strawberry = new Strawberry("Strawberry", "red");
+$strawberry->message();
+$strawberry->intro();
+?>
+```
+
+### PHP - Overriding Inherited Methods
+
+Look at the example below. The **construct() and intro() methods in the child class (Strawberry) will override the **construct() and intro() methods in the parent class (Fruit):
+
+```php
+<?php
+class Fruit {
+  public $name;
+  public $color;
+  public function __construct($name, $color) {
+    $this->name = $name;
+    $this->color = $color;
+  }
+  public function intro() {
+    echo "The fruit is {$this->name} and the color is {$this->color}.";
+  }
+}
+
+class Strawberry extends Fruit {
+  public $weight;
+  public function __construct($name, $color, $weight) {
+    $this->name = $name;
+    $this->color = $color;
+    $this->weight = $weight;
+  }
+  public function intro() {
+    echo "The fruit is {$this->name}, the color is {$this->color}, and the weight is {$this->weight} gram.";
+  }
+}
+
+$strawberry = new Strawberry("Strawberry", "red", 50);
+$strawberry->intro();
+?>
+```
+
+### PHP - The final Keyword
+
+The `final` keyword can be used to prevent class inheritance or to prevent method overriding.
+
+```php
+<?php
+final class Fruit {
+  // some code
+}
+
+// will result in error
+class Strawberry extends Fruit {
+  // some code
+}
+?>
+```
+
+Method Overriding
+
+```php
+<?php
+class Fruit {
+  final public function intro() {
+    // some code
+  }
+}
+
+class Strawberry extends Fruit {
+  // will result in error
+  public function intro() {
+    // some code
+  }
+}
+?>
+```
+
+## PHP - Class Constants
+
+- Constants cannot be changed once it is declared.
+
+- Class constants can be useful if you need to define some constant data within a class.
+
+- A class constant is declared inside a `class` with the const keyword.
+
+- Class constants are case-sensitive. However, it is recommended to name the constants in all uppercase letters.
+
+- We can access a constant from outside the class by using the class name followed by the **scope resolution operator** (`::`) followed by the constant name, like here:
+
+Example
+
+```php
+<?php
+class Goodbye {
+  const LEAVING_MESSAGE = "Thank you for visiting W3Schools.com!";
+}
+
+echo Goodbye::LEAVING_MESSAGE;
+?>
+```
+
+Or, we can access a constant from inside the class by using the `self` keyword followed by the scope resolution operator (::) followed by the constant name, like here:
+
+```php
+<?php
+class Goodbye {
+  const LEAVING_MESSAGE = "Thank you for visiting W3Schools.com!";
+  public function byebye() {
+    echo self::LEAVING_MESSAGE;
+  }
+}
+
+$goodbye = new Goodbye();
+$goodbye->byebye();
+?>
+```
+
+## Abstract Classes and Methods
+
+- An abstract class is a class that contains at least one abstract method. An abstract method is a method that is declared, but not implemented in the code.
+
+- An abstract class or method is defined with the `abstract` keyword:
+
+```php
+<?php
+abstract class ParentClass {
+  abstract public function someMethod1();
+  abstract public function someMethod2($name, $color);
+  abstract public function someMethod3() : string;
+}
+?>
+```
+
+When inheriting from an abstract class, the child class method must be defined with the same name, and the same or a less restricted access modifier. So, if the abstract method is defined as protected, the child class method must be defined as either protected or public, but not private. Also, the type and number of required arguments must be the same. However, the child classes may have optional arguments in addition.
+
+So, when a child class is inherited from an abstract class, we have the following rules:
+
+- The child class method must be defined with the same name and it redeclares the parent abstract method
+- The child class method must be defined with the same or a less restricted access modifier
+- The number of required arguments must be the same. However, the child class may have optional arguments in addition
+
+Let's look at an example:
+
+Example
+
+```php
+<?php
+// Parent class
+abstract class Car {
+  public $name;
+  public function __construct($name) {
+    $this->name = $name;
+  }
+  abstract public function intro() : string;
+}
+
+// Child classes
+class Audi extends Car {
+  public function intro() : string {
+    return "Choose German quality! I'm an $this->name!";
+  }
+}
+
+class Volvo extends Car {
+  public function intro() : string {
+    return "Proud to be Swedish! I'm a $this->name!";
+  }
+}
+
+class Citroen extends Car {
+  public function intro() : string {
+    return "French extravagance! I'm a $this->name!";
+  }
+}
+
+// Create objects from the child classes
+$audi = new audi("Audi");
+echo $audi->intro();
+echo "<br>";
+
+$volvo = new volvo("Volvo");
+echo $volvo->intro();
+echo "<br>";
+
+$citroen = new citroen("Citroen");
+echo $citroen->intro();
+?>
+```
+
+Let's look at another example where the abstract method has an argument, and the child class has two optional arguments that are not defined in the parent's abstract method:
+
+```php
+<?php
+abstract class ParentClass {
+  // Abstract method with an argument
+  abstract protected function prefixName($name);
+}
+
+class ChildClass extends ParentClass {
+  // The child class may define optional arguments that are not in the parent's abstract method
+  public function prefixName($name, $separator = ".", $greet = "Dear") {
+    if ($name == "John Doe") {
+      $prefix = "Mr";
+    } elseif ($name == "Jane Doe") {
+      $prefix = "Mrs";
+    } else {
+      $prefix = "";
+    }
+    return "{$greet} {$prefix}{$separator} {$name}";
+  }
+}
+
+$class = new ChildClass;
+echo $class->prefixName("John Doe");
+echo "<br>";
+echo $class->prefixName("Jane Doe");
+?>
+```
+
+## PHP OOP - Interfaces
+
+Interfaces are declared with the `interface` keyword:
+
+```php
+<?php
+interface InterfaceName {
+  public function someMethod1();
+  public function someMethod2($name, $color);
+  public function someMethod3() : string;
+}
+?>
+```
+
+### PHP - Interfaces vs. Abstract Classes
+
+Interface are similar to abstract classes. The difference between interfaces and abstract classes are:
+
+- Interfaces cannot have properties, while abstract classes can
+- All interface methods must be public, while abstract class methods is public or protected
+- All methods in an interface are abstract, so they cannot be implemented in code and the abstract keyword is not necessary
+- Classes can implement an interface while inheriting from another class at the same time
+
+### PHP - Using Interfaces
+
+To implement an interface, a class must use the `implements` keyword.
+
+```php
+<?php
+interface Animal {
+  public function makeSound();
+}
+
+class Cat implements Animal {
+  public function makeSound() {
+    echo "Meow";
+  }
+}
+
+$animal = new Cat();
+$animal->makeSound();
+?>
+```
+
+## PHP OOP - Traits
+
+PHP - What are Traits?
+PHP only **supports** `single inheritance`: a child class can inherit only from one single parent.
+
+- So, what if a class needs to inherit multiple behaviors? OOP traits solve this problem.
+
+- Traits are used to declare methods that can be used in multiple classes. Traits can have methods and abstract methods that can be used in multiple classes, and the methods can have any access modifier (public, private, or protected).
+
+- Traits are declared with the `trait` keyword:
+
+Syntax
+
+```php
+<?php
+trait TraitName {
+  // some code...
+}
+?>
+```
+
+To use a trait in a class, use the `use` keyword:
+
+```php
+<?php
+class MyClass {
+  use TraitName;
+}
+?>
+```
+
+example
+
+```php
+<?php
+trait message1 {
+public function msg1() {
+    echo "OOP is fun! ";
+  }
+}
+
+class Welcome {
+  use message1;
+}
+
+$obj = new Welcome();
+$obj->msg1();
+?>
+```
+
+Using Multiple Traits
+
+```php
+<?php
+trait message1 {
+  public function msg1() {
+    echo "OOP is fun! ";
+  }
+}
+
+trait message2 {
+  public function msg2() {
+    echo "OOP reduces code duplication!";
+  }
+}
+
+class Welcome {
+  use message1;
+}
+
+class Welcome2 {
+  use message1, message2;
+}
+
+$obj = new Welcome();
+$obj->msg1();
+echo "<br>";
+
+$obj2 = new Welcome2();
+$obj2->msg1();
+$obj2->msg2();
+?>
+```
+
+## Static Methods
+
+Static methods can be called directly - without creating an instance of the class first.
+
+Static methods are declared with the `static` keyword:
+
+Syntax
+
+```php
+<?php
+class ClassName {
+  public static function staticMethod() {
+    echo "Hello World!";
+  }
+}
+?>
+```
+
+To access a static method use the class name, double colon (`::`), and the method name:
+Syntax
+
+```php
+ClassName::staticMethod();
+```
+
+Example
+
+```php
+<?php
+class greeting {
+  public static function welcome() {
+    echo "Hello World!";
+  }
+}
+
+// Call static method
+greeting::welcome();
+?>
+```
+
+A class can have both static and non-static methods. A static method can be accessed from a method in the same class using the `self` keyword and double colon (::):
+
+```php
+Example
+<?php
+class greeting {
+  public static function welcome() {
+    echo "Hello World!";
+  }
+
+  public function __construct() {
+    self::welcome();
+  }
+}
+
+new greeting();
+?>
+```
+
+Static methods can also be called from methods in other classes. To do this, the static method should be `public`:
+
+Example
+
+```php
+<?php
+class greeting {
+  public static function welcome() {
+    echo "Hello World!";
+  }
+}
+
+class SomeOtherClass {
+  public function message() {
+    greeting::welcome();
+  }
+}
+?>
+```
+
+To call a static method from a child class, use the `parent` keyword inside the child class. Here, the static method can be `public` or `protected`.
+
+Example
+
+```php
+<?php
+class domain {
+  protected static function getWebsiteName() {
+    return "W3Schools.com";
+  }
+}
+
+class domainW3 extends domain {
+  public $websiteName;
+  public function __construct() {
+    $this->websiteName = parent::getWebsiteName();
+  }
+}
+
+$domainW3 = new domainW3;
+echo $domainW3 -> websiteName;
+?>
+```
+
+## PHP - Static Properties
+
+Static properties can be called directly - without creating an instance of a class.
+
+Static properties are declared with the `static` keyword:
+
+Syntax
+
+```php
+<?php
+class ClassName {
+  public static $staticProp = "W3Schools";
+}
+?>
+```
+
+To access a static property use the class name, double colon (::), and the property name:
+
+Syntax
+
+```php
+ClassName::staticProp;
+```
+
+Example
+
+```php
+<?php
+class pi {
+  public static $value = 3.14159;
+}
+
+// Get static property
+echo pi::$value;
+?>
+```
+
+A class can have both static and non-static properties. A static property can be accessed from a method in the same class using the `self` keyword and double colon (`::`):
+
+Example
+
+```php
+<?php
+class pi {
+  public static $value=3.14159;
+  public function staticValue() {
+    return self::$value;
+  }
+}
+
+$pi = new pi();
+echo $pi->staticValue();
+?>
+```
+
+To call a static property from a child class, use the `parent` keyword inside the child class:
+
+Example
+
+```php
+<?php
+class pi {
+  public static $value=3.14159;
+}
+
+class x extends pi {
+  public function xStatic() {
+    return parent::$value;
+  }
+}
+
+// Get value of static property directly via child class
+echo x::$value;
+
+// or get value of static property via xStatic() method
+$x = new x();
+echo $x->xStatic();
+?>
+```
+
+## PHP Namespaces
+Namespaces are qualifiers that solve two different problems:
+
+1. They allow for better organization by grouping classes that work together to perform a task.
+2. They allow the same name to be used for more than one class.
+
+* For example, you may have a set of classes which describe an HTML table, such as Table, Row and Cell while also having another set of classes to describe furniture, such as Table, Chair and Bed. Namespaces can be used to organize the classes into two different groups while also preventing the two classes Table and Table from being mixed up.
+### Declaring a Namespace
+Namespaces are declared at the beginning of a file using the `namespace` keyword:
+
+Syntax
+Declare a namespace called Html:
+```php
+namespace Html;
+```
+> Note: Note: A `namespace` declaration must be the first thing in the PHP file. The following code would be invalid:
+
+Constants, classes and functions declared in this file will belong to the Html namespace:
+
+Example
+Create a Table class in the Html namespace:
+```php
+<?php
+namespace Html;
+class Table {
+  public $title = "";
+  public $numRows = 0;
+  public function message() {
+    echo "<p>Table '{$this->title}' has {$this->numRows} rows.</p>";
+  }
+}
+$table = new Table();
+$table->title = "My table";
+$table->numRows = 5;
+?>
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<?php
+$table->message();
+?>
+
+</body>
+</html>
+```
+For further organization, it is possible to have nested namespaces:
+
+Syntax
+Declare a namespace called Html inside a namespace called Code:
+```php
+namespace Code\Html;
+```
+### Using Namespaces
+Any code that follows a `namespace` declaration is operating inside the namespace, so classes that belong to the namespace can be instantiated without any qualifiers. To access classes from outside a namespace, the class needs to have the namespace attached to it.
+
+Example
+Use classes from the Html namespace:
+```php
+$table = new Html\Table()
+$row = new Html\Row();
+```
+When many classes from the same namespace are being used at the same time, it is easier to use the namespace keyword:
+
