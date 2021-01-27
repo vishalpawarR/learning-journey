@@ -1513,26 +1513,32 @@ echo $x->xStatic();
 ```
 
 ## PHP Namespaces
+
 Namespaces are qualifiers that solve two different problems:
 
 1. They allow for better organization by grouping classes that work together to perform a task.
 2. They allow the same name to be used for more than one class.
 
-* For example, you may have a set of classes which describe an HTML table, such as Table, Row and Cell while also having another set of classes to describe furniture, such as Table, Chair and Bed. Namespaces can be used to organize the classes into two different groups while also preventing the two classes Table and Table from being mixed up.
+- For example, you may have a set of classes which describe an HTML table, such as Table, Row and Cell while also having another set of classes to describe furniture, such as Table, Chair and Bed. Namespaces can be used to organize the classes into two different groups while also preventing the two classes Table and Table from being mixed up.
+
 ### Declaring a Namespace
+
 Namespaces are declared at the beginning of a file using the `namespace` keyword:
 
 Syntax
 Declare a namespace called Html:
+
 ```php
 namespace Html;
 ```
+
 > Note: Note: A `namespace` declaration must be the first thing in the PHP file. The following code would be invalid:
 
 Constants, classes and functions declared in this file will belong to the Html namespace:
 
 Example
 Create a Table class in the Html namespace:
+
 ```php
 <?php
 namespace Html;
@@ -1559,21 +1565,257 @@ $table->message();
 </body>
 </html>
 ```
+
 For further organization, it is possible to have nested namespaces:
 
 Syntax
 Declare a namespace called Html inside a namespace called Code:
+
 ```php
 namespace Code\Html;
 ```
+
 ### Using Namespaces
+
 Any code that follows a `namespace` declaration is operating inside the namespace, so classes that belong to the namespace can be instantiated without any qualifiers. To access classes from outside a namespace, the class needs to have the namespace attached to it.
 
 Example
 Use classes from the Html namespace:
+
 ```php
 $table = new Html\Table()
 $row = new Html\Row();
 ```
-When many classes from the same namespace are being used at the same time, it is easier to use the namespace keyword:
 
+When many classes from the same namespace are being used at the same time, it is easier to use the namespace keyword:
+The name space should be the first line inside the php code.
+
+### Namespace Alias
+
+It can be useful to give a namespace or class an alias to make it easier to write. This is done with the `use` keyword:
+
+Example
+Give a namespace an alias:
+
+```php
+use Html as H;
+$table = new H\Table();
+```
+
+## PHP - What is an Iterable?
+
+An iterable is any value which can be looped through with a `foreach()` loop.
+
+The `iterable` pseudo-type was introduced in PHP 7.1, and it can be used as a data type for function arguments and function return values.
+
+### PHP - Using Iterables
+
+The `iterable` keyword can be used as a data type of a function argument or as the return type of a function:
+
+Example
+Use an iterable function argument:
+
+```php
+<?php
+function printIterable(iterable $myIterable) {
+  foreach($myIterable as $item) {
+    echo $item;
+  }
+}
+
+$arr = ["a", "b", "c"];
+printIterable($arr);
+?>
+```
+
+Example
+Return an iterable:
+
+```php
+<?php
+function getIterable():iterable {
+  return ["a", "b", "c"];
+}
+
+$myIterable = getIterable();
+foreach($myIterable as $item) {
+  echo $item;
+}
+?>
+```
+
+### PHP - Creating Iterables
+
+#### Arrays
+
+All arrays are iterables, so any array can be used as an argument of a function that requires an iterable.
+
+### Iterators
+
+Any object that implements the `Iterator` **interface** can be used as an argument of a function that requires an iterable.
+
+An iterator contains a list of items and provides methods to loop through them. It keeps a pointer to one of the elements in the list. Each item in the list should have a key which can be used to find the item.
+
+An iterator must have these methods:
+
+- `current()` - Returns the element that the pointer is currently pointing to. It can be any data type.
+- `key()` - Returns the key associated with the current element in the list. It can only be an integer, float, boolean or string.
+
+* `next()` - Moves the pointer to the next element in the list.
+* `rewind()` - Moves the pointer to the first element in the list.
+* `valid()` - If the internal pointer is not pointing to any element (for example, if next() was called at the end of the list), this should return false. It returns true in any other case.
+  Example
+  Implement the Iterator interface and use it as an iterable:
+
+```php
+<?php
+// Create an Iterator
+class MyIterator implements Iterator {
+  private $items = [];
+  private $pointer = 0;
+
+  public function __construct($items) {
+    // array_values() makes sure that the keys are numbers
+    $this->items = array_values($items);
+  }
+
+  public function current() {
+    return $this->items[$this->pointer];
+  }
+
+  public function key() {
+    return $this->pointer;
+  }
+
+  public function next() {
+    $this->pointer++;
+  }
+
+  public function rewind() {
+    $this->pointer = 0;
+  }
+
+  public function valid() {
+    // count() indicates how many items are in the list
+    return $this->pointer < count($this->items);
+  }
+}
+
+// A function that uses iterables
+function printIterable(iterable $myIterable) {
+  foreach($myIterable as $item) {
+    echo $item;
+  }
+}
+
+// Use the iterator as an iterable
+$iterator = new MyIterator(["a", "b", "c"]);
+printIterable($iterator);
+?>
+```
+
+## PHP Form Handling
+
+The PHP superglobals `$_GET` and `$_POST` are used to collect form-data.
+
+### PHP - A Simple HTML Form
+
+The example below displays a simple HTML form with two input fields and a submit button:
+
+Example
+
+```php
+<html>
+<body>
+
+<form action="welcome.php" method="post">
+Name: <input type="text" name="name"><br>
+E-mail: <input type="text" name="email"><br>
+<input type="submit">
+</form>
+
+</body>
+</html>
+```
+
+When the user fills out the form above and clicks the submit button, the form data is sent for processing to a PHP file named "welcome.php". The form data is sent with the HTTP POST method.
+
+To display the submitted data you could simply echo all the variables. The "welcome.php" looks like this:
+
+```php
+<html>
+<body>
+
+Welcome <?php echo $_POST["name"]; ?><br>
+Your email address is: <?php echo $_POST["email"]; ?>
+
+</body>
+</html>
+/*
+Output
+Welcome John
+Your email address is john.doe@example.com
+
+*/
+```
+
+The same result could also be achieved using the HTTP GET method:
+
+Example
+
+```php
+<html>
+<body>
+
+<form action="welcome_get.php" method="get">
+Name: <input type="text" name="name"><br>
+E-mail: <input type="text" name="email"><br>
+<input type="submit">
+</form>
+
+</body>
+</html>
+```
+
+and "welcome_get.php" looks like this:
+
+```php
+<html>
+<body>
+
+Welcome <?php echo $_GET["name"]; ?><br>
+Your email address is: <?php echo $_GET["email"]; ?>
+
+</body>
+</html>
+```
+
+The code above is quite simple. However, the most important thing is missing. You need to validate form data to protect your script from malicious code.
+
+### GET vs. POST
+
+Both GET and POST create an array (e.g. array( key1 => value1, key2 => value2, key3 => value3, ...)). This array holds key/value pairs, where keys are the names of the form controls and values are the input data from the user.
+
+Both GET and POST are treated as $\_GET and $\_POST. These are superglobals, which means that they are always accessible, regardless of scope - and you can access them from any function, class or file without having to do anything special.
+
+$\_GET is an array of variables passed to the current script via the URL parameters.
+
+$\_POST is an array of variables passed to the current script via the HTTP POST method.
+
+### When to use GET?
+
+Information sent from a form with the GET method is visible to everyone (all variable names and values are displayed in the URL). GET also has limits on the amount of information to send. The limitation is about 2000 characters. However, because the variables are displayed in the URL, it is possible to bookmark the page. This can be useful in some cases.
+
+GET may be used for sending non-sensitive data.
+
+> Note: GET should NEVER be used for sending passwords or other sensitive information!
+
+### When to use POST?
+
+Information sent from a form with the POST method is invisible to others (all names/values are embedded within the body of the HTTP request) and has no limits on the amount of information to send.
+
+Moreover POST supports advanced functionality such as support for multi-part binary input while uploading files to server.
+
+However, because the variables are not displayed in the URL, it is not possible to bookmark the page.
+
+> Note: Developers prefer POST for sending form data.
