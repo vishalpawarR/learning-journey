@@ -277,4 +277,132 @@ Here is a list of some common HTML events:
 | onmouseout  | The user moves the mouse away from an HTML element |
 | onkeydown   | The user pushes a keyboard key                     |
 | onload      | The browser has finished loading the page          |
+
 [ W3Schools JavaScript Reference HTML DOM Events.](https://www.w3schools.com/jsref/dom_obj_event.asp)
+
+### What can JavaScript Do?
+
+Event handlers can be used to handle and verify user input, user actions, and browser actions:
+
+- Things that should be done every time a page loads
+- Things that should be done when the page is closed
+- Action that should be performed when a user clicks a button
+- Content that should be verified when a user inputs data
+- And more ...
+  Many different methods can be used to let JavaScript work with events:
+
+- HTML event attributes can execute JavaScript code directly
+- HTML event attributes can call JavaScript functions
+- You can assign your own event handler functions to HTML elements
+- You can prevent events from being sent or being handled
+- And more ...
+  Six other escape sequences are valid in JavaScript:
+
+| Code | Result               |
+| ---- | -------------------- |
+| \b   | Backspace            |
+| \f   | Form Feed            |
+| \n   | New Line             |
+| \r   | Carriage Return      |
+| \t   | Horizontal Tabulator |
+| \v   | Vertical Tabulator   |
+
+## String
+
+### Breaking Long Code Lines
+
+For best readability, programmers often like to avoid code lines longer than 80 characters.
+
+If a JavaScript statement does not fit on one line, the best place to break it is after an operator:
+
+Example
+
+```html
+document.getElementById("demo").innerHTML = "Hello Dolly!";
+```
+
+You can also break up a code line within a text string with a single backslash:
+
+Example
+
+```html
+document.getElementById("demo").innerHTML = "Hello \ Dolly!";
+```
+
+> Note: The `\` method is not the preferred method. It might not have universal support.Some browsers do not allow spaces behind the `\` character.
+> Example :
+
+```html
+document.getElementById("demo").innerHTML = "Hello " + "Dolly!";
+```
+
+> Note: Don't create strings as objects. It slows down execution speed. The new keyword complicates the code. This can produce some unexpected results:
+
+## JavaScript String Methods
+
+- String Length : `length`.
+- Finding a String in a String : `indexOf()`.
+  The `indexOf()` method returns the index of (the position of) the first occurrence of a specified text in a string:
+
+```js
+var str = "Please locate where 'locate' occurs!";
+var pos = str.indexOf("locate");
+```
+
+The `lastIndexOf()` method returns the index of the last occurrence of a specified text in a string:
+Example
+
+```js
+var str = "Please locate where 'locate' occurs!";
+var pos = str.lastIndexOf("locate");
+```
+
+> Note: Both indexOf(), and lastIndexOf() return -1 if the text is not found.
+
+Both methods accept a second parameter as the starting position for the search:
+Example
+
+```js
+var str = "Please locate where 'locate' occurs!";
+var pos = str.indexOf("locate", 15);
+```
+
+### Searching for a String in a String
+
+The `search()` method searches a string for a specified value and returns the position of the match:
+
+Example
+
+```js
+var str = "Please locate where 'locate' occurs!";
+var pos = str.search("locate");
+```
+### Did You Notice?
+The two methods, `indexOf()` and `search()`, are equal?
+
+They accept the same arguments (parameters), and return the same value?
+
+The two methods are NOT equal. These are the differences:
+
+* The `search()` method cannot take a second start position argument.
+* The `indexOf()` method cannot take powerful search values (regular expressions).
+You will learn more about regular expressions in a later chapter.
+
+### There are 3 methods for extracting a part of a string:
+
+* slice(start, end)
+* substring(start, end)
+* substr(start, length)
+### The `slice()` Method
+```js
+var str = "Apple, Banana, Kiwi";
+var res = str.slice(7, 13);
+```
+If a parameter is negative, the position is counted from the end of the string.
+
+This example slices out a portion of a string from position -12 to position -6:
+
+```js
+var str = "Apple, Banana, Kiwi";
+var res = str.slice(-12, -6);
+```
