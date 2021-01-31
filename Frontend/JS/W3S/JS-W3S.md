@@ -377,27 +377,32 @@ Example
 var str = "Please locate where 'locate' occurs!";
 var pos = str.search("locate");
 ```
+
 ### Did You Notice?
+
 The two methods, `indexOf()` and `search()`, are equal?
 
 They accept the same arguments (parameters), and return the same value?
 
 The two methods are NOT equal. These are the differences:
 
-* The `search()` method cannot take a second start position argument.
-* The `indexOf()` method cannot take powerful search values (regular expressions).
-You will learn more about regular expressions in a later chapter.
+- The `search()` method cannot take a second start position argument.
+- The `indexOf()` method cannot take powerful search values (regular expressions).
+  You will learn more about regular expressions in a later chapter.
 
 ### There are 3 methods for extracting a part of a string:
 
-* slice(start, end)
-* substring(start, end)
-* substr(start, length)
+- slice(start, end)
+- substring(start, end)
+- substr(start, length)
+
 ### The `slice()` Method
+
 ```js
 var str = "Apple, Banana, Kiwi";
 var res = str.slice(7, 13);
 ```
+
 If a parameter is negative, the position is counted from the end of the string.
 
 This example slices out a portion of a string from position -12 to position -6:
