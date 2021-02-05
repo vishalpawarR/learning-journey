@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pressed effect</title>
+</head>
+
+<body>
+    <style>
+        #clicked {
+            background-color: #2a73e9;
+            padding: 12px 25px;
+            font-size: 24px;
+            color: white;
+            outline: none;
+            border: none;
+            box-shadow: 0 9px #999;
+            cursor: pointer;
+            border-radius: 15px;
+        }
+
+        #clicked:hover {
+            background-color: #1D4ED8;
+        }
+
+        #clicked:active {
+            box-shadow: 0 5px #666;
+            background-color: #1D4ED8;
+            transform: translateY(4px);
+        }
+    </style>
+    <h1>Pressed Button effect</h1>
+    <button id="clicked">Click</button>
+</body>
+
+</html>
